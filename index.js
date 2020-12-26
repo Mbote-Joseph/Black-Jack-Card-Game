@@ -15,13 +15,14 @@ let values = [
   "Three",
   "Two",
 ];
-//DOM Variables.
+
+// DOM variables
 let textArea = document.getElementById("text-area");
 let newGameButton = document.getElementById("new-game-button");
 let hitButton = document.getElementById("hit-button");
 let stayButton = document.getElementById("stay-button");
 
-//Game Variables.
+// Game variables
 let gameStarted = false,
   gameOver = false,
   playerWon = false,
@@ -30,6 +31,7 @@ let gameStarted = false,
   dealerScore = 0,
   playerScore = 0,
   deck = [];
+
 hitButton.style.display = "none";
 stayButton.style.display = "none";
 showStatus();
@@ -62,6 +64,35 @@ stayButton.addEventListener("click", function () {
   showStatus();
 });
 
+function checkForEndOfGame() {
+  updateScores();
+  if (gameOver) {
+    // let dealer take cards
+    while (
+      dealerScore < playerScore &&
+      playerScore <= 21 &&
+      dealerScore <= 21
+    ) {
+      dealerCards.push(getNextCard());
+      updateScores();
+    }
+  }
+
+  if (playerScore > 21) {
+    playerWon = false;
+    gameOver = true;
+  } else if (dealerScore > 21) {
+    playerWon = true;
+    gameOver = true;
+  } else if (gameOver) {
+    if (playerScore > dealerScore) {
+      playerWon = true;
+    } else {
+      playerWon = false;
+    }
+  }
+}
+
 function createDeck() {
   let deck = [];
   for (let suitIdx = 0; suitIdx < suits.length; suitIdx++) {
@@ -75,7 +106,8 @@ function createDeck() {
   }
   return deck;
 }
-function shuffleDeck(deck) {
+
+function shuffleDeck() {
   for (let i = 0; i < deck.length; i++) {
     let swapIdx = Math.trunc(Math.random() * deck.length);
     let tmp = deck[swapIdx];
@@ -83,9 +115,15 @@ function shuffleDeck(deck) {
     deck[i] = tmp;
   }
 }
+
+function getNextCard() {
+  return deck.shift();
+}
+
 function getCardString(card) {
   return card.value + " of " + card.suit;
 }
+
 function getCardNumericValue(card) {
   switch (card.value) {
     case "Ace":
@@ -110,6 +148,7 @@ function getCardNumericValue(card) {
       return 10;
   }
 }
+
 function getScore(cardArray) {
   let score = 0;
   let hasAce = false;
@@ -125,85 +164,52 @@ function getScore(cardArray) {
   }
   return score;
 }
-function updateScore() {
+
+function updateScores() {
   dealerScore = getScore(dealerCards);
   playerScore = getScore(playerCards);
 }
-function checkForEndOfGame() {
-  //TODo
-  updateScore();
-  if (gameOver) {
-    //let dealer take cards
-    while (
-      dealerScore < playerScore &&
-      playerScore <= 21 &&
-      dealerScore <= 21
-    ) {
-      dealerCards.push(getNextCard());
-      updateScore();
-    }
-  }
-  if (playerScore > 21) {
-    playerWon = false;
-    gameOver = true;
-  } else if (dealerScore > 21) {
-    if (playerScore > dealerScore) {
-      playerWon = true;
-      gameOver = true;
-    } else if (gameOver) {
-      if (playerScore > dealerScore) {
-        playerWon = true;
-      } else {
-        playerWon = false;
-      }
-      newGameButton.style.display = "inline";
-      hitButton.style.display = "none";
-      stayButton.style.display = "none";
-    }
-  }
-}
+
 function showStatus() {
   if (!gameStarted) {
-    textArea.innerText = "Welcome to Blackjack !";
+    textArea.innerText = "Welcome to Blackjack!";
     return;
   }
+
   let dealerCardString = "";
   for (let i = 0; i < dealerCards.length; i++) {
     dealerCardString += getCardString(dealerCards[i]) + "\n";
   }
 
   let playerCardString = "";
-  for (let i = 0; i < dealerCards.length; i++) {
+  for (let i = 0; i < playerCards.length; i++) {
     playerCardString += getCardString(playerCards[i]) + "\n";
   }
 
-  updateScore();
+  updateScores();
 
   textArea.innerText =
     "Dealer has:\n" +
     dealerCardString +
-    "(score : " +
+    "(score: " +
     dealerScore +
     ")\n\n" +
     "Player has:\n" +
     playerCardString +
-    "(score : " +
+    "(score: " +
     playerScore +
     ")\n\n";
+
   if (gameOver) {
     if (playerWon) {
-      textArea.innerText += "YOU WIN !";
+      textArea.innerText += "YOU WIN!";
     } else {
-      textArea.innerText += "DEALER WINS";
+      textArea.innerText += "DEALER WINS!";
     }
     newGameButton.style.display = "inline";
     hitButton.style.display = "none";
     stayButton.style.display = "none";
   }
-}
-
-function getNextCard() {
-  return deck.shift();
 }
 
 var date = (document.getElementById(
