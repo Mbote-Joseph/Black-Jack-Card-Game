@@ -5,18 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <h2 id="date" style="text-align: right"></h2>
     <hr />
-    <h1>BlackJack</h1>
-    <h4>By Mbote Joseph.</h4>
-
-    <h2 id="text-area">Welcome to BlackJack</h2>
-    <button id="new-game-button">New Game</button>
-    <button id="hit-button">Hit!</button>
-    <button id="stay-button">Stay</button>
-
+    <div class="playgroung">
+      <div class="card border-primary mb-3" style="max-width: 18rem">
+        <div
+          class="card-header bg-transparent border-primary"
+          style="color: rosybrown"
+        >
+          BlackJack
+        </div>
+        <div class="card-body text-primary">
+          <h4 class="card-title">By Mbote Joseph.</h4>
+          <p class="card-text" id="text-area">Welcome to BlackJack</p>
+        </div>
+        <div class="card-footer bg-transparent border-primary">
+          <button class="btn btn-outline-primary" id="new-game-button">
+            New Game
+          </button>
+          <button class="btn btn-outline-success" id="hit-button">Hit!</button>
+          <button class="btn btn-outline-warning" id="stay-button">Stay</button>
+        </div>
+      </div>
+    </div>
     <script src="index.js"></script>
   </body>
 </html>
