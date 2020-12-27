@@ -215,3 +215,35 @@ function showStatus() {
 var date = (document.getElementById(
   "date"
 ).innerHTML = new Date().toDateString());
+
+//Example of closure in javascript.
+let app = (function () {
+  let carId = 123;
+  let getId = function () {
+    return carId;
+  };
+  return {
+    getId: getId,
+  };
+})();
+console.log(app.getId);
+
+//Constructor Fuction  Method.
+function Animal(name) {
+  this.animalName = name;
+  this.move = function () {
+    console.log("The " + name + " is moving as expected.");
+  };
+  this.eat = () => console.log("The " + name + " is feeding on food .");
+}
+
+let cow = new Animal("cow");
+cow.move();
+cow.eat();
+
+//this keyword in constructor function.
+function Goat(name) {
+  this.NameId = name;
+}
+let goat = new Goat("Mathenge Mburi");
+console.log(goat.NameId);
